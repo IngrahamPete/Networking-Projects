@@ -1,0 +1,84 @@
+first step to build network
+
+
+have a Base network which is
+ 	10.50.0.0/16
+ 	it also includes departments with different host needs
+
+first i have to allocate subnets using vslm or make  the largest network first
+
+Admin (25 hosts)
+Staff (60 hosts)
+Students (120 hosts)
+Servers (10 hosts)
+
+which is the students
+
+THis is done by using CIDR prefix (classless Inter Domain Rounting).
+
+It is typically written as an IP address followed by a slash and a number (e.g., 192.168.0.0/24), where the number indicates the number of bits used for the network prefix.
+
+
+For example, a CIDR prefix of /24 indicates that the first 24 bits are used for the network part, allowing for 256 IP addresses in that subnet.
+
+How it works if the prefix is /32 only one Ip address is usable.
+if it is /30 that mean 255.255.255.252 this means the amount of IP address you can use is 4 but due to network address and broadcast address the only amount oyu can use is 2.
+
+this is basically 4 bytes and lowering the number increases the number of available addresses
+
+
+256 /24
+128 /25
+64  /26
+32 /27
+16 /28
+8 /29
+4 /30
+2 /31
+1 /32
+
+
+
+
+
+
+
+
+10.50.0.0/16
+First I made the subnet for each department of hosts
+started from the largest amount of host then worked my way down on the local network.
+How i did it was determin the correct prefix by determinging which prefix was larger than the host section i was working on.
+For example if there are 120 hosts i will choose the /25 prefix which will allow me 128 disctinct ip addresses.
+Then I chose the network address which is the path to the specific subnet which in this example is 10.50.0.0.
+then I chose the subnet mask. This is the network porition of the subnet that ips cannot interact with .
+In this case it is 255.255.255.128.
+
+The usable ranges of ips are 10.50.0.1 - .126.
+And finally the broadcast is .127 which allows it to interact with all devices on the network.
+Gateway is the first usable ip on the network.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Next I have to Create the VLANs on the switches.
+
+Then as i have multiple broaodcst domains or VLANS the router would not be able to determine which VLAN to send the traffic to. THis is where trunk cables come in.
+
+The trunk cables allow the router the send traffic to the VLAN it needs to be sent to .More indepth this is done by 802.1Q tagging by adding a VLAN tag to each frame so the router or other receiving switch can know which VLAN needs the frame.
+
+
+I now go to packet tracer:
+
+pick a HQ switch and start creating the VLANS
+
+the cli on the switch to create the different vlans:
