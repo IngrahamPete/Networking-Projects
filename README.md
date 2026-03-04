@@ -1,11 +1,13 @@
-first step to build network
+Network Design & Implementation Project
+Inter-VLAN Routing with VLSM (Router-on-a-Stick)
 
-
-have a Base network which is
+Base Network & Planning
+Company Base Network
  	10.50.0.0/16
- 	it also includes departments with different host needs
 
-first i have to allocate subnets using vslm or make  the largest network first
+it also includes departments with different host needs
+
+First i have to allocate subnets using vslm or make  the largest network first
 
 Admin (25 hosts)
 Staff (60 hosts)
@@ -14,18 +16,26 @@ Servers (10 hosts)
 
 which is the students
 
-THis is done by using CIDR prefix (classless Inter Domain Rounting).
 
-It is typically written as an IP address followed by a slash and a number (e.g., 192.168.0.0/24), where the number indicates the number of bits used for the network prefix.
+This subnetting process is accomplished using CIDR (Classless Inter-Domain Routing) notation.
 
+CIDR is written as an IP address followed by a forward slash and a number (for example, 192.168.0.0/24). The number after the slash represents how many bits are used for the network portion of the address.
 
-For example, a CIDR prefix of /24 indicates that the first 24 bits are used for the network part, allowing for 256 IP addresses in that subnet.
+For example, a prefix of /24 means the first 24 bits identify the network. Since an IPv4 address is 32 bits total, that leaves 8 bits for host addresses. Eight host bits allow for 
+2^8=256 total addresses in the subnet.
 
-How it works if the prefix is /32 only one Ip address is usable.
-if it is /30 that mean 255.255.255.252 this means the amount of IP address you can use is 4 but due to network address and broadcast address the only amount oyu can use is 2.
+Different prefixes determine how many usable host addresses are available:
 
-this is basically 4 bytes and lowering the number increases the number of available addresses
+/32 uses all 32 bits for the network, meaning only one single IP address exists. This is typically used to identify a single device.
 
+/30 corresponds to the subnet mask 255.255.255.252. This provides 4 total addresses. However, because one address is reserved as the network address and one as the broadcast address, only 2 usable host addresses remain. This is commonly used for point-to-point WAN links.
+
+An IPv4 address consists of 32 bits (4 octets). The CIDR prefix determines how many of those bits are used for the network portion of the address.
+
+As the prefix number increases, more bits are allocated to the network portion and fewer bits remain for host addresses. This results in fewer usable IP addresses in the subnet.
+As the prefix number decreases, more bits are available for hosts, increasing the number of usable addresses.
+
+Below is a reference for common subnet sizes:
 
 256 /24
 128 /25
@@ -37,19 +47,42 @@ this is basically 4 bytes and lowering the number increases the number of availa
 2 /31
 1 /32
 
+Subnetting the Base Network
+
+The base network provided was:
 10.50.0.0/16
-First I made the subnet for each department of hosts
-started from the largest amount of host then worked my way down on the local network.
-How i did it was determin the correct prefix by determinging which prefix was larger than the host section i was working on.
-For example if there are 120 hosts i will choose the /25 prefix which will allow me 128 disctinct ip addresses.
-Then I chose the network address which is the path to the specific subnet which in this example is 10.50.0.0.
-then I chose the subnet mask. This is the network porition of the subnet that ips cannot interact with .
-In this case it is 255.255.255.128.
+To divide this network among departments, I used VLSM (Variable Length Subnet Masking).
 
-The usable ranges of ips are 10.50.0.1 - .126.
-And finally the broadcast is .127 which allows it to interact with all devices on the network.
-Gateway is the first usable ip on the network.
+Step 1: Start With the Largest Department
 
+Subnetting begins with the department requiring the most hosts. This prevents address space fragmentation and ensures efficient allocation.
+
+For example, if a department requires 120 hosts, I select the smallest prefix that can support at least 120 usable addresses.
+
+A /25 provides:
+
+128 total addresses
+
+126 usable addresses (subtracting network and broadcast)
+
+Since 126 usable addresses is greater than 120, /25 is appropriate.
+
+Example: 10.50.0.0/25
+
+Network Address: 10.50.0.0
+
+Subnet Mask: 255.255.255.128
+
+Usable Range: 10.50.0.1 – 10.50.0.126
+
+Broadcast Address: 10.50.0.127
+
+Default Gateway: 10.50.0.1 (first usable address)
+
+The network address identifies the subnet itself.
+The broadcast address allows communication to all devices within the subnet.
+The usable IP range is assigned to hosts.
+The default gateway is typically the first usable IP address and is assigned to the router interface.
 
 
 <img width="1275" height="365" alt="image" src="https://github.com/user-attachments/assets/d7967f36-3929-42e1-932c-5392ee0bf166" />
