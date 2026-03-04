@@ -67,3 +67,61 @@ pick a HQ switch and start creating the VLANS
 
 the cli on the switch to create the different vlans:
 <img width="761" height="674" alt="image" src="https://github.com/user-attachments/assets/1d700a2f-476e-44e6-80cf-d04815ed8603" />
+
+
+After the VLAN Creation I assinged the accsess ports to each vlan.
+
+<img width="472" height="357" alt="image" src="https://github.com/user-attachments/assets/6081bdfc-d05b-4a98-b558-c81217a4edb4" />
+
+After those commands we do the trunk port.
+enable 
+confifure terminal 
+interface fa0/24
+switchport mode trunk
+
+then:
+show interfaces trunk
+show vlan brief
+<img width="717" height="530" alt="image" src="https://github.com/user-attachments/assets/d70fc23b-e802-4edb-857a-96cf1b602b65" />
+
+
+
+We then configure the router 
+To enable the router interface we use 
+GigabitEthernet0/0/0
+<img width="721" height="212" alt="image" src="https://github.com/user-attachments/assets/46198039-8f69-4ca3-b317-6a29420564f3" />
+
+then on that interface we create the sub interfaces with these commands  
+<img width="491" height="555" alt="image" src="https://github.com/user-attachments/assets/76b781cc-a0b5-4c38-9506-9aca288117ed" />
+
+
+<img width="737" height="226" alt="image" src="https://github.com/user-attachments/assets/c59e1fcf-2e49-4306-95c8-e9008a4c3289" />
+
+
+After that we then configure dhcp for all the subinterfaces
+
+with these commands 
+First we exclude the gateway addresses to the vlans
+<img width="397" height="102" alt="image" src="https://github.com/user-attachments/assets/28552050-da0a-4cea-b87b-cc178ecdc1f6" />
+
+Then create the pools from the other ranges from the vlsm plan
+<img width="494" height="572" alt="image" src="https://github.com/user-attachments/assets/9a8a0574-d846-458c-81d8-180f66953ffe" />
+
+
+Now I have to test it on the pcs by pinging the gateway addresses to the other vlans
+
+
+<img width="530" height="559" alt="image" src="https://github.com/user-attachments/assets/0931e59f-fd2a-48f4-8174-dd08cfb0dacb" />
+<img width="572" height="349" alt="image" src="https://github.com/user-attachments/assets/451a673b-1e2f-4f73-af0e-5866a44f7ebb" />
+
+This shows the everthing else works 
+
+On the switch and router 
+
+write memory to save configuration
+
+
+
+
+
+
