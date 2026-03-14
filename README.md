@@ -329,10 +329,7 @@ default-router 10.50.0.225
 
 ![DHCP Pool Configuration](https://github.com/user-attachments/assets/9a8a0574-d846-458c-81d8-180f66953ffe)
 
-```
-```
 
-````markdown
 ## 11. Testing and Verification
 
 ### 11.1 Test Connectivity from PCs
