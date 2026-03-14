@@ -332,6 +332,27 @@ default-router 10.50.0.225
 ```
 ```
 
+````markdown
+## 11. Testing and Verification
+
+### 11.1 Test Connectivity from PCs
+
+![PC Connectivity Test](https://github.com/user-attachments/assets/0931e59f-fd2a-48f4-8174-dd08cfb0dacb)
+
+![Inter-VLAN Ping Test](https://github.com/user-attachments/assets/451a673b-1e2f-4f73-af0e-5866a44f7ebb)
+
+## 12. Save the Configuration
+
+```bash
+write memory
+````
+
+## 13. Summary
+
+The successful ping tests confirmed that the VLAN assignments were correct, trunking was functioning properly, the router subinterfaces were routing traffic correctly, DHCP was assigning valid addresses, and inter-VLAN communication was successful. After testing, the configurations on both the switch and router were saved using `write memory` so the settings would persist after a reboot.
+
+```
+```
 
 
 
