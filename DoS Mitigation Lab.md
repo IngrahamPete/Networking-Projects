@@ -1,8 +1,7 @@
 # Web Application Denial-of-Service Mitigation Report
 
-**CYB102 - Project 4**  
-**Author:** Alex Rivera  
-**Date:** October 28, 2024  
+**Author:** Pete Ingraham 
+**Date:** December 5, 2025
 **Classification:** Educational / Training Exercise  
 **Version:** 1.0  
 
