@@ -1,79 +1,104 @@
-Objective
-Create VLAN 20 and VLAN 30 on two switches.
+# VLAN Configuration Lab Report
 
-Assign hosts to VLANs.
+## Objective
 
-Configure trunk links between switches.
+- Create VLAN 20 and VLAN 30 on two switches
+- Assign hosts to VLANs
+- Configure trunk links between switches
+- Enable inter-VLAN communication
 
-Enable inter-VLAN communication.
+## Network Topology
 
-Picture:
+![VLAN config](https://github.com/user-attachments/assets/35da40ee-5628-4211-9c17-1d83a73409c0)
 
+---
 
-<img width="852" height="721" alt="VLAN config" src="https://github.com/user-attachments/assets/35da40ee-5628-4211-9c17-1d83a73409c0" />
+## IP Configuration
 
+### VLAN 20
+| Device | IP Address | Subnet Mask |
+|--------|-----------|------------|
+| PC0 | 172.16.20.2 | 255.255.255.0 |
+| PC1 | 172.16.20.3 | 255.255.255.0 |
 
-FIrst I set the IP's on the PC's and defined the subnet mask
-VLAN 20
-PC0 -172.16.20.2
-PC1 -172.16.20.3
-subnet mask: 255.255.255.0
+### VLAN 30
+| Device | IP Address | Subnet Mask |
+|--------|-----------|------------|
+| PC3 | 172.16.30.2 | 255.255.255.0 |
+| PC4 | 172.16.30.3 | 255.255.255.0 |
 
-VLAN 30
-PC3- 172.16.30.2
-PC4- 172.16.30.3
-subnet mask: 255.255.255.0
+---
 
-Right now although without the vlans the devices can connect when vlans are introduced we need to be able to communicated on the same vlan between switches.
-This will be done with trunk links.
+## Configuration Overview
 
-Then I begin configuring switchs:
-SW0:
-enable 
-configure ternminal
-(create vlans)vlan 20
+Devices within the same VLAN can communicate directly. When VLANs are introduced, trunk links are needed to allow inter-switch communication between devices in the same VLAN. Trunk links carry traffic from multiple VLANs between switches.
+
+---
+
+## Switch Configuration
+
+### SW0 Configuration
+
+```
+enable
+configure terminal
+
+! Create VLANs
+vlan 20
 vlan 30
-(then bind the interface to the vlan)
-int f0/1
-switchport mode access
-switchport access vlan 20
 
-int f0/2
-switchport mode access 
-switchport access vlan 30
+! Assign access ports
+interface f0/1
+  switchport mode access
+  switchport access vlan 20
 
-int g0/1
-switchport mode trunk
+interface f0/2
+  switchport mode access
+  switchport access vlan 30
 
-Then do the same with SW 1:
-SW1:
-enable 
-configure ternminal
-(create vlans)vlan 20
+! Configure trunk port
+interface g0/1
+  switchport mode trunk
+```
+
+### SW1 Configuration
+
+```
+enable
+configure terminal
+
+! Create VLANs
+vlan 20
 vlan 30
-(then bind the interface to the vlan)
-int f0/1
-switchport mode access
-switchport access vlan 20
 
-int f0/2
-switchport mode access 
-switchport access vlan 30
+! Assign access ports
+interface f0/1
+  switchport mode access
+  switchport access vlan 20
 
-(configuring the trunk for 1 is unnessary as it is done automatically and they are connected with a cross over cable.
+interface f0/2
+  switchport mode access
+  switchport access vlan 30
 
-Verificaiton commands:
-Switches:
-show vlan brief → confirms VLAN creation and port assignment.
+! Note: Trunk configuration is automatic via crossover cable
+```
 
-show interfaces switchport → confirms access/trunk mode.
+---
 
-show interfaces trunk → confirms VLANs allowed and active on trunk.
+## Verification Commands
 
-PC's:
+### Switches
 
-ping between hosts in VLAN 20 (success expected).
+| Command | Purpose |
+|---------|---------|
+| `show vlan brief` | Confirms VLAN creation and port assignment |
+| `show interfaces switchport` | Confirms access/trunk mode configuration |
+| `show interfaces trunk` | Confirms VLANs allowed and active on trunk |
 
-ping between hosts in VLAN 30 (success expected).
+### PCs
 
-ping between VLAN 20 and VLAN 30 (requires inter-VLAN routing).
+| Test | Expected Result |
+|------|-----------------|
+| Ping between hosts in VLAN 20 (PC0 ↔ PC1) | ✓ Success |
+| Ping between hosts in VLAN 30 (PC3 ↔ PC4) | ✓ Success |
+| Ping between VLAN 20 and VLAN 30 | ⚠ Requires inter-VLAN routing |
