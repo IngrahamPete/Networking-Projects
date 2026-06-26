@@ -10,7 +10,7 @@ Enable inter-VLAN communication.
 Picture:
 
 
-file:///C:/Users/pingraham/Downloads/VLAN%20config.png
+<img width="852" height="721" alt="VLAN config" src="https://github.com/user-attachments/assets/35da40ee-5628-4211-9c17-1d83a73409c0" />
 
 
 FIrst I set the IP's on the PC's and defined the subnet mask
