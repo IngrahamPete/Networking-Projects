@@ -13,7 +13,6 @@ Picture:
 file:///C:/Users/pingraham/Downloads/VLAN%20config.png
 
 
-
 FIrst I set the IP's on the PC's and defined the subnet mask
 VLAN 20
 PC0 -172.16.20.2
