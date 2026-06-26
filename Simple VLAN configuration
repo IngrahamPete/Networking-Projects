@@ -1,0 +1,79 @@
+Objective
+Create VLAN 20 and VLAN 30 on two switches.
+
+Assign hosts to VLANs.
+
+Configure trunk links between switches.
+
+Enable inter-VLAN communication.
+
+Picture:
+
+
+
+
+
+FIrst I set the IP's on the PC's and defined the subnet mask
+VLAN 20
+PC0 -172.16.20.2
+PC1 -172.16.20.3
+subnet mask: 255.255.255.0
+
+VLAN 30
+PC3- 172.16.30.2
+PC4- 172.16.30.3
+subnet mask: 255.255.255.0
+
+Right now although without the vlans the devices can connect when vlans are introduced we need to be able to communicated on the same vlan between switches.
+This will be done with trunk links.
+
+Then I begin configuring switchs:
+SW0:
+enable 
+configure ternminal
+(create vlans)vlan 20
+vlan 30
+(then bind the interface to the vlan)
+int f0/1
+switchport mode access
+switchport access vlan 20
+
+int f0/2
+switchport mode access 
+switchport access vlan 30
+
+int g0/1
+switchport mode trunk
+
+Then do the same with SW 1:
+SW1:
+enable 
+configure ternminal
+(create vlans)vlan 20
+vlan 30
+(then bind the interface to the vlan)
+int f0/1
+switchport mode access
+switchport access vlan 20
+
+int f0/2
+switchport mode access 
+switchport access vlan 30
+
+(configuring the trunk for 1 is unnessary as it is done automatically and they are connected with a cross over cable.
+
+Verificaiton commands:
+Switches:
+show vlan brief → confirms VLAN creation and port assignment.
+
+show interfaces switchport → confirms access/trunk mode.
+
+show interfaces trunk → confirms VLANs allowed and active on trunk.
+
+PC's:
+
+ping between hosts in VLAN 20 (success expected).
+
+ping between hosts in VLAN 30 (success expected).
+
+ping between VLAN 20 and VLAN 30 (requires inter-VLAN routing).
